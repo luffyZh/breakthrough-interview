@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>A 获取 B 的数据</title>
+</head>
+<body>
+  <h1>window.name跨域获取数据</h1>
+</body>
+<script>
+  const currentDomain = 'http://127.0.0.1:3006'; // 当前域
+  const corssDomain = 'http://127.0.0.1:3008'; // 跨域
+  window.onload = function() {
+    let flag = false; // 是否获取数据
+    iframe = document.createElement('iframe'),
+    loadData = ()=> {
+      if (flag) {
+        // 读取B的数据
+        let data = iframe.contentWindow.name;    
+        console.log(data, 66666);
+        iframe.contentWindow.document.write('');
+        iframe.contentWindow.close();
+        document.body.removeChild(iframe);
+      } else {
+          flag = true;
+          // 加载同域代理文件
+          iframe.contentWindow.location = `${currentDomain}/proxy.html`; 
+      }  
+    };
+    iframe.src = `${corssDomain}/b-data.html`;
+    if (iframe.attachEvent) {
+      iframe.attachEvent('onload', loadData);
+    } else {
+      iframe.onload  = loadData;
+    }
+    document.body.appendChild(iframe);
+  }
+</script>
+</html>

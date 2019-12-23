@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>前端跨域相关</title>
+  <style>
+    .a-name {
+      color: blue;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>邮箱</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button onclick="loadJsonpData()">JSONP获取数据</button>
+</body>
+<script>
+  function loadJsonpData() {
+    const script = document.createElement('script');
+    script.src='http://localhost:3000/jsonp/list';
+    document.body.appendChild(script);
+  }
+
+  function callbackData(data) {
+    console.log(data, 98989);
+  }
+
+  function goOtherPage(dom) {
+    
+  }
+
+  window.onload = function() {
+    const xhr_cors = new XMLHttpRequest();
+    xhr_cors.open('GET', 'http://localhost:3000/cors/list');
+    xhr_cors.onreadystatechange = function () { 
+      if (xhr_cors.readyState === 4 && xhr_cors.status === 200) {
+        const resData = JSON.parse(xhr_cors.responseText);
+        console.log(resData);
+        const tbodyDom = document.getElementsByTagName('tbody')[0];
+        resData.forEach(item => {
+          const trDom = document.createElement('tr');
+          trDom.innerHTML = `<td><a onclick="goOtherPage(this)" class='a-name'>${item.name}</a></td><td>${item.email}</td>`;
+          tbodyDom.appendChild(trDom);
+        });
+      }
+    };
+    xhr_cors.send();
+  }
+</script>
+</html>

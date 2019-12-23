@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Webscoket</title>
+  <style>
+    .container {
+      padding: 10px;
+      border: 1px solid #e2e3e4;
+    }
+  </style>
+</head>
+<body>
+  <input id='client' />
+  <button id='sendMessage'>发送消息</button>
+  <div class="container">
+    <h2>下面是对话内容：</h2>
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+<script>
+  // Create WebSocket connection.
+  const socket = io('ws://127.0.0.1:3002');
+
+  // Connection opened
+  socket.on('connect', function (data) {
+    socket.send('Let us start chat');
+  });
+
+  // Listen messages from server
+  socket.on('message', function (data) {
+    console.log('Message from server ', data);
+    const pDom = document.createElement('p');
+    pDom.innerText = data; 
+    pDom.style.color = 'blue';
+    document.getElementsByClassName('container')[0].appendChild(pDom);
+  });
+
+  document.getElementById('sendMessage').addEventListener('click', function () {
+    const msg = document.getElementById('client').value;
+    socket.send(`地瓜地瓜，我是土豆，我想对你说：${msg}`);
+    const pDom = document.createElement('p');
+    pDom.innerText = `地瓜地瓜，我是土豆，我想对你说：${msg}`; 
+    pDom.style.color = 'green';
+    document.getElementsByClassName('container')[0].appendChild(pDom);
+  });
+</script>
+</html>

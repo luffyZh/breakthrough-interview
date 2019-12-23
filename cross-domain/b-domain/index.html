@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>B - Domain</title>
+  <style>
+    .container {
+      padding: 10px;
+      border: 1px solid #e3e3e3;
+    }
+  </style>
+</head>
+<body>
+  <p>window.name = <span id='windowName' style="color: red"></span></p>
+  <div class='container'>
+    <h2>我是B页面，下面是来自 A 页面的消息：</h2>
+  </div>
+  <input id='chatA' />
+  <button onclick="postMsg()">发送</button>
+</body>
+<script>
+  window.onload = function() {
+    document.getElementById('windowName').innerText = window.name
+  }
+
+  // postMessage
+
+  let target;
+
+  window.addEventListener("message", receiveMessage, false);
+
+  function receiveMessage(event) {
+    target = event;
+    console.log(target, 111);
+    // For Chrome, the origin property is in the event.originalEvent
+    const origin = event.origin || event.originalEvent.origin; 
+    if (origin !== "http://127.0.0.1:3006") {
+      return;
+    }
+    const receiveMsg = `${(new Date()).toLocaleString()}: ${event.data}`;
+    const pDom = document.createElement('p');
+    pDom.innerText = receiveMsg;
+    document.getElementsByClassName('container')[0].appendChild(pDom);
+  }
+
+
+  // 给 A 回消息
+  function postMsg() {
+    const msg = document.getElementById('chatA').value;
+    console.log(msg, target);
+    target.source.postMessage(msg, target.origin);
+  }
+
+</script>
+</html>

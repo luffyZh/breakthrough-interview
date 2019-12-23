@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XSS - 非持久反射型</title>
+</head>
+<body>
+  <h1>非持久反射型</h1>
+  <hr/>
+  <h2>你好啊～<span id='name'></span></h2>
+</body>
+<script>
+  function getUrlParam (name) {
+    const reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+    const r = window.location.search.substr(1).match(reg);
+    if (r != null) return unescape(r[2]); return null;
+  }
+  window.onload = function() {
+    const name = getUrlParam('name');
+    console.log(name);
+    document.getElementById('name').innerText = name;
+  }
+</script>
+</html>

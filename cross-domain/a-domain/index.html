@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>A - Domain</title>
+  <style>
+    .container {
+      padding: 10px;
+      border: 1px solid #e3e3e3;
+    }
+  </style>
+</head>
+<body>
+  <input id='windowName' />
+  <button onclick="setWindowName()">设置 window.name</button>
+  <br />
+  <button onclick="alert(window.name)">获取 window.name</button>
+  <br />
+  <a href='http://127.0.0.1:3008/'>跳转到3008端口</a>
+  <br /><br />
+  <a href='http://127.0.0.1:3006/a-data.html'>window.name跨域获取数据示例</a>
+  <hr/>
+  <h2>下面是postMessage</h2>
+  <a href='#' onclick="openB()">打开B页面</a><br />
+  <input id='chatB' placeholder="输入内容跟B交谈" />
+  <button onclick="postMsg()">发送消息</button>
+  <hr />
+  <div class='container'>
+    <h2>我是 A 页面，下面是来自 B 页面的消息</h2>
+  </div>
+</body>
+<script>
+  function setWindowName() {
+    window.name = document.getElementById('windowName').value;
+  }
+  // postMessage
+  let opener;
+  function openB () {
+    opener = window.open('http://127.0.0.1:3008/index.html')
+  }
+
+  // 发送消息
+  function postMsg() {
+    const msg = document.getElementById('chatB').value;
+    opener.postMessage(msg, "http:/127.0.0.1:3008");
+  }
+
+  window.addEventListener("message", receiveMessage, false);
+
+  function receiveMessage(event) {
+    console.log(event.data);
+    // For Chrome, the origin property is in the event.originalEvent
+    const origin = event.origin || event.originalEvent.origin; 
+    if (origin !== "http://127.0.0.1:3008") {
+      return;
+    }
+    const receiveMsg = `${(new Date()).toLocaleString()}: ${event.data}`;
+    const pDom = document.createElement('p');
+    pDom.innerText = receiveMsg;
+    document.getElementsByClassName('container')[0].appendChild(pDom);
+  }
+</script>
+</html>

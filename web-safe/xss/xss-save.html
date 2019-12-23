@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XSS - 持久存储型</title>
+  <style>
+    .container {
+      padding: 10px;
+      border: 1px solid #e2e2e2;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    我是文章
+  </h1>
+  <textarea placeholder="请输入你的评论内容" id='comment'></textarea>
+  <button onclick="postComment()">提交评论</button>
+  <div class='container'>
+    <h2>文章评论：</h2>
+  </div>
+</body>
+<script>
+  async function postComment() {
+    const comment = document.getElementById('comment').value;
+    const data = {
+      author: 'luffy',
+      comment
+    };
+    const res = await fetch('http://127.0.0.1:3000/comment', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    });
+    const resData = await res.json();
+    if (resData.message === 'success') {
+      const r = confirm('评论添加成功');
+      if (r) {
+        location.href = 'http://localhost:3000/comment'
+      } else {
+        location.href = 'http://localhost:3000/comment'
+      }
+    }
+  }
+</script>
+</html>
