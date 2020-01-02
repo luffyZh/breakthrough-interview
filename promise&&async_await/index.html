@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Promise && Async/Await</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 最简单的回调地狱
+  setTimeout(() => {
+    console.log(111);
+    setTimeout(() => {
+      console.log(222);
+      setTimeout(() => {
+        console.log(333);
+        setTimeout(() => {
+          console.log(444);
+          // 你还可以放置更多
+        }, 4000);
+      }, 3000);
+    }, 2000)
+  }, 1000);
+
+  // promise 解决
+  function f1() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(111), 1000);
+    }).then(data => console.log(data));
+  }
+  function f2() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(222), 2000);
+    }).then(data => console.log(data));;
+  }
+  function f3() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(333), 3000);
+    }).then(data => console.log(data));;
+  }
+  function f4() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(444), 4000);
+    }).then(data => console.log(data));;
+  }
+  f1().then(f2).then(f3).then(f4);
+
+  /**
+   * 回调地狱示例
+   */
+  const db = Object.create(null); // 假设这就是连接数据库的对象
+  /**
+   * 第一步，从 A 表查出 id 为 1 的用户
+   * 第二步，从 B 表查出文章作者是 id = 1 用户 username 的所有文章
+   **/
+  db.query('SELECT * FROM A WHERE id = 1', function(err, results) {
+    if (err) throw err;
+    // 完成第一步，开始第二步
+    db.query(`SELECT * FROM B WHERE author = ${results[0].username}`, function(err, results) {
+      if (err) throw err;
+      // 完成第二步，开始干坏事
+      console.log(results);
+    });
+  });
+
+  /**
+   * 使用 Promise
+   * 因为 Promise 是 ES6，所以下面所有代码都使用 ES6 语法
+   **/
+  new Promise((resolve, reject) => {
+    db.query('SELECT * FROM A WHERE id = 1', (err, results) => {
+      if (err) reject(err);
+      resolve(results);
+    });
+  }).then(data => {
+    // 拿到第一步数据，开始第二步
+    db.query(`SELECT * FROM B WHERE author = ${results[0].username}`, (err, results) => {
+      if (err) reject(err);
+      // 完成第二步，开始干坏事
+      console.log(results);
+    });
+  }).catch(err => {
+    throw err;
+  });
+
+ /* Async/Await */
+ new Promise((resolve, reject) => {
+    setTimeout(() => resolve(111), 1000);
+  }).then(data => {
+    console.log(data);
+    new Promise((resolve, reject) => {
+      setTimeout(() => resolve(222), 2000)
+    }).then(data => {
+      console.log(data);
+      new Promise((resolve, reject) => {
+        setTimeout(() => resolve(333), 3000)
+      }).then(data => {
+        console.log(data);
+        new Promise((resolve, reject) => {
+          setTimeout(() => resolve(444), 4000)
+        }).then(data => {
+          console.log(data);
+        })
+      })
+    })
+  });
+
+  async function timeoutFn() {
+    await f1();
+    await f2();
+    await f3();
+    await f4();
+  }
+  timeoutFn();
+
+  // 数据库查询
+  async function queryData() {
+    try {
+      // 第一步，获取数据
+      const step1Data = await db.query('SELECT * FROM A WHERE id = 1');
+      // 第二步，获取数据
+      const step2Data = await db.query(`SELECT * FROM B WHERE author = ${step1Data[0].username}`);
+      console.log(step2Data);
+    } catch(e) {
+      throw e;
+    }
+  }
+
+  new Promise((resolve, reject) => {
+    setTimeout(() => resolve(111), 1000);
+  }).then(data => {
+    console.log(data);
+    return data + 111;
+  }).then(data => {
+    console.log(data);
+  });
+
+  new Promise((resolve, reject) => {
+    setTimeout(() => reject(111), 1000);
+  }).then(data => {
+    console.log('then data:', data);
+  }).catch(e => {
+    console.log('catch e: ', e);
+    return e;
+  }).then(data => {
+    console.log('catch data: ', data);
+  });
+
+  // promise 解决
+  function f1() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => resolve(111), 1000);
+    });
+  }
+  function f2() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject(222), 2000);
+    });;
+  }
+  function f3() {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => reject(333), 3000);
+    });;
+  }
+
+  Promise.all([f1(), f2(), f3()]).then(results => {
+    console.log(results);
+  }).catch(e => {
+    console.log(e);
+  });
+
+</script>
+</html>

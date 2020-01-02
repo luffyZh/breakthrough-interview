@@ -16,8 +16,10 @@ app.get('/hello', (req, res) => {
   res.send(`<h1>Hello, ${name}</h1>`);
 });
 
+/**
+ * 用户评论存入 db.txt
+ */
 app.post('/comment', (req, res) => {
-  console.log(req.body);
   fs.writeFile(
     path.resolve(__dirname, './db.txt'),
     `${req.body.comment}\n`,
@@ -28,7 +30,7 @@ app.post('/comment', (req, res) => {
         message: 'success'
       });
     });
-})
+});
 
 app.get('/comment', async (req, res) => {
   const comment = await fs.readFileSync(path.resolve(__dirname, './db.txt'), 'utf-8');
