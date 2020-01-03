@@ -147,6 +147,12 @@
     return e;
   }).then(data => {
     console.log('catch data: ', data);
+    return data;
+  }).finally(() => {
+    console.log('promise finally');
+    return 222;
+  }).then(data => {
+    console.log('finally data: ', data);
   });
 
   // promise 解决
@@ -172,5 +178,10 @@
     console.log(e);
   });
 
+  async function awaitSync() {
+    console.log(await (a = 1));
+  } 
+
 </script>
 </html>
+
