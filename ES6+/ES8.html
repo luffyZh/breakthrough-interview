@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+<script name='values/entries'>
+  var obj = {
+    name: 'luffyzh',
+    email: 'luffyzh@163.com'
+  }
+  // ES5
+  Object.keys(obj).map((key) => obj[key]);
+
+  // ES8
+  Object.values(obj);
+  Object.entries(obj);
+</script>
+<script name='string-padding'>
+  var str = '0.0';
+  console.log(str.padStart(4, '10'));
+  console.log(str.padStart(4));
+  console.log(str.padEnd(10, 'x'));
+  console.log(str.padEnd(10));
+</script>
+<script name='obj-description'>
+   var obj = {
+    name: 'luffyzh',
+    email: 'luffyzh@163.com',
+    say() {
+      console.log(this.name);
+    }
+  }
+  Object.getOwnPropertyDescriptors(obj);
+</script>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES6+</title>
+</head>
+<body>
+</body>
+<script src='./class.js'></script>
+<script name='generator'>
+  function* testGenerator() {
+    yield 'a';
+    yield 'b';
+    return 'c';
+  }
+  var g = testGenerator();
+  console.log(g);
+</script>
+<script name='symbol'>
+  var a = 1;
+  var b = '2';
+  var c = false;
+  var d = {};
+  var e = null;
+  var f = undefined;
+  var g = Symbol();
+  console.log(typeof a);
+  console.log(typeof b);
+  console.log(typeof c);
+  console.log(typeof d);
+  console.log(typeof e);
+  console.log(typeof f);
+  console.log(typeof g);
+
+  var s1 = Symbol()
+  var s2 = Symbol('another symbol')
+  var s3 = Symbol('another symbol')
+
+  s1 === s2 // false
+  s2 === s3 // fal
+</script>
+<script name='spread'>
+  var arr = [1, 2, 3];
+  console.log(arr);
+  console.log(...arr);
+  var arrCopy = JSON.parse(JSON.stringify(arr));
+  console.log(arrCopy2 !== arr);
+  var arrCopy2 = [...arr];
+  console.log(arrCopy2 !== arr);
+</script>
+<script name='set'>
+  var setObj = new Set([1, 1, 2, 3, 4, 4]);
+  console.log(setObj); // {1, 2, 3, 4}
+  setObj.add(1);     // {1, 2, 3, 4}
+  setObj.add(5);   // {1, 2, 3, 4, 5}
+  setObj.keys(); // {1, 2, 3, 4, 5}
+</script>
+<script name='arrowFunc'>
+  var scope = 'window';
+  var obj = {
+    scope: 'obj',
+    funcScope: function() {
+      console.log('当前作用域：', this.scope);
+    },
+    arrayFuncScope: () => console.log('当前作用域：', this.scope)
+  }
+  var obj2 = {
+    scope: 'obj2'
+  }
+  obj.funcScope();
+  obj.arrayFuncScope();
+  obj.funcScope.call(obj2);
+  obj.arrayFuncScope.call(obj2);
+</script>
+<script name='scope'>
+  /* ES6 class */
+  const person = new Person('luffy', 28);
+  const chinesePerson = new Chinese('周', 33);
+
+  person.say();
+  chinesePerson.say();
+  person.self();
+
+  var objLikeArr = {
+    0: 'aaa',
+    1: 'bbb',
+    2: 'ccc',
+    length: 3
+  }
+  console.log(Array.from(objLikeArr));
+  Array.isArray(objLikeArr);
+  Array.isArray(Array.from(objLikeArr));
+  /* 字符串 */
+  var n = 'luffyZh';
+  var es5Str = 'Hello ' + n;
+  const es6Str = `Hello ${n}`;
+  console.log(es5Str, es6Str);
+  {
+    var a = 1;
+    var b = 1;
+    console.log('scope:', a, b);
+  }
+  function foo () {
+    var a = 2;
+    var b = 2;
+    console.log('foo:', a, b);
+  }
+  console.log('windoiw:', a, b);
+  foo();
+  {
+    let c = 1;
+    let d = 1;
+    console.log('scope:', c, d);
+  }
+  function foo2 () {
+    let c = 2;
+    let d = 2;
+    console.log('foo2:', c, d);
+  }
+  foo2();
+  // console.log('window:', c, d);
+
+  const aa = 1;
+  aa = 2;
+
+  const bb = {};
+  bb.a = 1;
+  console.log(bb);
+
+  const cc = [];
+  cc.push(1);
+  console.log(cc);
+
+  const dd = null;
+  dd = 1;
+  console.log(dd);
+</script>
+</html>

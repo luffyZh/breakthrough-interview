@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Border</title>
+  <style>
+    .box {
+      width: 200px;
+      padding: 20px;
+      background-color: gold;
+      margin: 20px 0;
+    }
+    .radius {
+      border-radius: 8px;
+    }
+    .half-radius {
+      border-top-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+    }
+    .shadow {
+      box-shadow: 10px 10px 5px #888888;
+    }
+    .border-img {
+      width: 200px;
+      border:15px solid transparent;
+      border-image: url(border.png) 30 30 round;
+      -moz-border-image:url(border.png) 30 30 round; /* 老的 Firefox */
+      -webkit-border-image: url(border.png) 30 30 round; /* Safari 和 Chrome */
+      -o-border-image: url(border.png) 30 30 round; /* Opera */
+    }
+  </style>
+</head>
+<body>
+  <div class="box radius">
+    圆角
+  </div>
+  <div class="box half-radius">
+    部分圆角
+  </div>
+  <div class="box shadow">
+    边框阴影
+  </div>
+  <div class="border-img">
+    边框背景图
+  </div>
+</body>
+</html>

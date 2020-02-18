@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Font</title>
+  <style>
+    @font-face { 
+      font-family: BorderWeb; 
+      src:url(BORDERW0.eot); 
+    } 
+    .overflow {
+      white-space: nowrap; 
+      width: 100px;
+      overflow: hidden;
+      text-overflow:ellipsis;
+    }
+    .shadow {
+      width: 100px;
+      text-shadow: 5px 5px 5px #FF0000;
+    }
+    .wordwrap {
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+  <p>我是普通字体</p>
+  <p><font style="font-family: STKaiti">通过font标签来设置字体</font></p>
+  <p class="overflow">
+    粉色的来访记录开始大家分开了就是打开理解费拉达斯解放路口的时间见风使舵冷静的思考了几分短裤蓝色粉色的看了飞机老师
+  </p>
+  <p class="shadow wordwrrap">
+    粉色的来访记录开始大家分开了就是打开理解费拉达斯解放路口的时间见风使舵冷静的思考了几分短裤蓝色粉色的看了飞机老师
+  </p>
+</body>
+</html>

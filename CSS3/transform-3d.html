@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform-3d</title>
+</head>
+<body>
+  
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transform-3d</title>
+  <style>
+    .translate-3d {
+      width: 100px;
+      height: 100px;
+      background-color: aqua;
+      transform: rotateX(120deg);
+    }
+    .rotate-3d {
+      width: 100px;
+      height: 100px;
+      background-color: orange;
+      transform: rotateY(60deg);
+    }
+    .box {
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+      background-color: green;
+      margin: 10px;
+    }
+    .animate-2d {
+      animation: animate-2d 2s;
+    }
+    @keyframes animate-2d {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .animate-3d {
+      animation: animate-3d 2s;
+    }
+    @keyframes animate-3d {
+      from { transform: rotateX(0deg); }
+      to { transform: rotateX(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <h1>3d 转换</h1>
+  <h2>动画区别</h2>
+  <div id='box-2d' class="box">
+    2D 转换
+  </div>
+  <div id='box-3d' class="box">
+    3D 转换
+  </div>
+  <div class="translate-3d">
+    距离左150
+    <br/>
+    距离顶部100
+  </div>
+  <div class="rotate-3d">
+    旋转30度
+  </div>
+</body>
+<script>
+  document.getElementById('box-2d').addEventListener('click', function(e) {
+    e.target.classList.add('animate-2d');
+  });
+  document.getElementById('box-3d').addEventListener('click', function(e) {
+    e.target.classList.add('animate-3d');
+  });
+</script>
+</html>
