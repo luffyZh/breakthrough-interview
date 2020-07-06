@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Call/Apply/Bind</title>
+</head>
+<body>
+  
+</body>
+<script src='./call.js'></script>
+<script src='./apply.js'></script>
+<script>
+  var name = 'window';
+  var obj1 = {
+    name: 'obj1',
+    sayName: function() {
+      console.log(this.name);
+    }
+  }
+  var obj2 = {
+    name: 'obj2'
+  }
+  var obj3 = {
+    name: 'obj3'
+  }
+  obj1.sayName();
+  obj1.sayName.call(window);
+  obj1.sayName.apply(obj2);
+  var sayObj3Name = obj1.sayName.bind(obj3);
+  sayObj3Name();
+
+  var arr = [1, 88, -98, 99, 765, 9, 76];
+  console.log(Math.max.apply(undefined, arr));
+  console.log(Math.max.call(undefined, ...arr));
+
+  obj1.sayName._call(window);
+  obj1.sayName._apply(obj2);
+
+</script>
+</html>

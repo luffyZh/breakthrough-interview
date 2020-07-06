@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数组封装方法</title>
+</head>
+<body>
+  
+</body>
+<script>
+  const arr = [];
+  arr.reduce((acc, curVal, curIndex) => {
+    console.log(acc, curVal, curIndex);
+    return acc + curVal;
+  }, 0)
+
+  // 函数柯里化
+  // 第三步 - 参数柯里化，将多参数变成1个参数
+  const curryFn = (fn) => {
+    if (typeof fn !== 'function') {
+      throw Error('No function provided');
+    }
+    // 这里返回的函数不能是匿名函数，因为函数内部还会有判断要进行参数柯里化操作，所以要给个名字
+    return function curryInnerFn(...args) {
+      // 如果当前接收到的参数小于原函数参数，那么进行参数柯里化操作
+      if (args.length < fn.length) {
+        return function() {
+          // 这里又返回一个匿名函数，必须是 ES5 形式，因为下面合并参数要使用 arguments
+          return curryInnerFn.apply(null, args.concat(
+            // 这里是最重要的，如果参数小于原函数 fn 的参数，返回柯里化函数之后说明后续还会继续接受参数，因此，递归继续返回函数直到参数不小于原函数的参数长度再执行，所以，参数需要一直的连接过来，内部函数调用时（会形成闭包）接收的参数 args （闭包所在的外部函数传递进来的）连接即将接收的参数 arguments（内部函数自身调用时传入的）
+            [].slice.call(arguments)
+          ));
+        }
+      }
+      // 如果柯里化函数接收的参数个数和原函数接收参数个数一致（或大于原函数），直接执行原函数即可
+      return fn.apply(null, args);
+    }
+  }
+  const add = (x, y, z) => {
+    return x + y + z
+  }
+  const curryAdd = curryFn(add);
+  console.log(curryAdd(1)(2)(3));
+  console.log(curryAdd(1, 2)(3));
+
+</script>
+</html>

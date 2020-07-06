@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包</title>
+</head>
+<body>
+  <h2>正常的</h2>
+  <ul id='ul-normal'>
+    <li>第一个节点</li>
+    <li>第二个节点</li>
+    <li>第三个节点</li>
+    <li>第四个节点</li>
+    <li>第五个节点</li>
+  </ul>
+  <h2>闭包解法</h2>
+  <ul id='ul-closure'>
+    <li>第一个节点</li>
+    <li>第二个节点</li>
+    <li>第三个节点</li>
+    <li>第四个节点</li>
+    <li>第五个节点</li>
+  </ul>
+  <h2>ES6 块级作用域</h2>
+  <ul id='ul-es6'>
+    <li>第一个节点</li>
+    <li>第二个节点</li>
+    <li>第三个节点</li>
+    <li>第四个节点</li>
+    <li>第五个节点</li>
+  </ul>
+</body>
+<script name="非闭包">
+  var ulDom = document.getElementById('ul-normal');
+  for (var i = 0; i < ulDom.childElementCount; i++) {
+    ulDom.children[i].addEventListener('click', function() {
+      console.log(i);
+    });
+  }
+</script>
+<script name="闭包解决">
+  var ulDom = document.getElementById('ul-normal');
+  for (var i = 0; i < ulDom.childElementCount; i++) {
+    (function(j) {
+      console.log(j);
+      ulDom.children[j].addEventListener('click', function() {
+        console.log(j);
+      });
+    })(i);
+  }
+</script>
+<script name="块级作用域">
+  var ulDom = document.getElementById('ul-es6');
+  for (let i = 0; i < ulDom.childElementCount; i++) {
+    ulDom.children[i].addEventListener('click', function() {
+      console.log(i);
+    });
+  }
+</script>
+<script src='./module1.js'></script>
+<script src='./module2.js'></script>
+<script>
+  function sayHello() {
+    console.log('Window say Hello');
+  }
+  /* 调用 Module1 的 */
+  var m1 = new Module1();
+  m1.sayHello();
+  /* 调用 Module2 的 */
+  Module2.sayHello();
+  /* 调用 Window 的 */
+  sayHello();
+</script>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>继承</title>
+</head>
+<body>
+  
+</body>
+<script>
+  /**
+   * 构造函数
+   **/
+  function Person() {};
+  // 每一个函数都有一个 prototype 属性，注意必须是函数才有此属性
+  Person.prototype.name = 'luffyzh';
+  /**
+   * 实例化
+   **/
+  var person1 = new Person();
+  var person2 = new Person();
+  console.log(person1.name, person2.name); // luffyzh luffyzh
+  /**
+   * __proto__ 是实例对象的属性，指向该实例的原型（不是构造函数）
+   **/
+  person1.__proto__ = Person.prototype;
+  var a = 1;
+  a.__proto__ === Number.prototype;
+  var str = 'luffyzh';
+  str.__proto__ === String.prototype;
+  Person.prototype.constructor === Person;
+</script>
+</html>

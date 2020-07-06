@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>闭包</title>
+</head>
+<body>
+  
+</body>
+<script>
+  // 最简单的闭包
+  function outer() {
+    var a = 1;
+    return function inner() {
+      return a += 1;
+    }
+  }
+  var outFn = outer();
+  console.log(outFn());
+  console.log(outFn());
+  console.log(outFn());
+
+  // 可访问的作用域
+  var globalStr = 'global';
+  function outer_scope() {
+    var outerStr = 'outer';
+    return function () {
+      var innerStr = 'inner';
+      console.log(globalStr, outerStr, innerStr);
+    }
+  }
+  var outFn2 = outer_scope();
+  outFn2();
+
+  function fnLen(a, b, c) {};
+
+  console.log(fnLen.length);
+
+  const newPow = (base, radix) => {
+    return Math.pow(base, radix);
+  }
+
+  const memorized = (fn) => {
+    const memoDatabase = {};
+    return function() {
+      console.log(memoDatabase);
+      const key = Array.from(arguments).join('/');
+      return memoDatabase[key] || (memoDatabase[key] = fn.apply(this, arguments))
+    };
+  }
+
+  const fastNewPow = memorized(newPow);
+
+</script>
+</html>
